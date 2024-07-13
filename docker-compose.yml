@@ -1,0 +1,20 @@
+services:
+  database:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DATABASE__USERID}
+      POSTGRES_PASSWORD: ${DATABASE__PASSWORD}
+      POSTGRES_DB: ${DATABASE__DATABASE}
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "${DATABASE__USERID}" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+volumes:
+  dbdata:
