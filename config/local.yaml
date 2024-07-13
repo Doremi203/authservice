@@ -1,0 +1,12 @@
+env: "local"
+db:
+  user-id: ${DATABASE__USERID}
+  password: ${DATABASE__PASSWORD}
+  database: ${DATABASE__DATABASE}
+  host: ${DATABASE__HOST}
+  options: ${DATABASE__OPTIONS}
+grpc:
+  port: 8080
+  timeout: 1h
+auth:
+  token-ttl: 10m
