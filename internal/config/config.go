@@ -2,6 +2,7 @@ package config
 
 import (
 	"flag"
+	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
 	"os"
 	"time"
@@ -20,6 +21,10 @@ type DBConfig struct {
 	Database string `yaml:"database" env-required:"true"`
 	Host     string `yaml:"host" env-required:"true"`
 	Options  string `yaml:"options" env-required:"true"`
+}
+
+func (c DBConfig) ConnectionString() string {
+	return fmt.Sprintf("User ID=%s;Password=%s;Host=%s;Database=%s;%s", c.UserID, c.Password, c.Host, c.Database, c.Options)
 }
 
 type GrpcConfig struct {
@@ -58,7 +63,7 @@ func getConfigPath() string {
 	flag.Parse()
 
 	if path == "" {
-		os.Getenv("CONFIG_PATH")
+		path = os.Getenv("CONFIG_PATH")
 	}
 
 	return path

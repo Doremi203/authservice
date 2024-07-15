@@ -1,10 +1,10 @@
 env: "local"
 db:
-  user-id: ${DATABASE__USERID}
-  password: ${DATABASE__PASSWORD}
-  database: ${DATABASE__DATABASE}
-  host: ${DATABASE__HOST}
-  options: ${DATABASE__OPTIONS}
+  user-id: user
+  password: password
+  database: auth-service-db
+  host: localhost
+  options: Port=5432;Pooling=true
 grpc:
   port: 8080
   timeout: 1h
