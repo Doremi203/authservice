@@ -5,6 +5,7 @@ db:
   database: auth-service-db
   host: localhost
   options: Port=5432;Pooling=true
+  migrations-path: ""
 grpc:
   port: 8080
   timeout: 1h
