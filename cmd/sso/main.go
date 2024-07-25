@@ -1,6 +1,7 @@
 package main
 
 import (
+	"authservice/internal/app"
 	"authservice/internal/config"
 	"log/slog"
 	"os"
@@ -19,6 +20,14 @@ func main() {
 		slog.String("Env", cfg.Env),
 		slog.Int("Port", cfg.Grpc.Port))
 
+	application := app.Constructor(
+		log,
+		cfg.Grpc.Port,
+		cfg.DB,
+		cfg.Auth,
+	)
+
+	application.MustRun()
 }
 
 func setupLogger(env string) *slog.Logger {
