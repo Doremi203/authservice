@@ -1,11 +1,11 @@
-env: "local"
+env: "prod"
 db:
   user-id: user
   password: password
   database: auth-service-db
-  host: localhost
+  host: database
   options: Port=5432;Pooling=true
-  migrations-path: "path"
+  migrations-path: ""
 grpc:
   port: 8080
   timeout: 1h
