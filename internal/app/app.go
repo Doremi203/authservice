@@ -3,6 +3,7 @@ package app
 import (
 	grpcapp "authservice/internal/app/grpc"
 	"authservice/internal/config"
+	"authservice/internal/domain/services/token"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -17,7 +18,7 @@ func Constructor(
 	log *slog.Logger,
 	port int,
 	dbConfig config.DBConfig,
-	authConfig config.AuthConfig,
+	tokenConfig token.Config,
 ) App {
 	grpcApp := grpcapp.Constructor(log, port)
 

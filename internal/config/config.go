@@ -1,6 +1,7 @@
 package config
 
 import (
+	"authservice/internal/domain/services/token"
 	"flag"
 	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
@@ -9,10 +10,10 @@ import (
 )
 
 type Config struct {
-	Env  string     `yaml:"env" env-default:"local"`
-	DB   DBConfig   `yaml:"db" env-required:"true"`
-	Grpc GrpcConfig `yaml:"grpc" env-required:"true"`
-	Auth AuthConfig `yaml:"auth" env-required:"true"`
+	Env   string       `yaml:"env" env-default:"local"`
+	DB    DBConfig     `yaml:"db" env-required:"true"`
+	Grpc  GrpcConfig   `yaml:"grpc" env-required:"true"`
+	Token token.Config `yaml:"token" env-required:"true"`
 }
 
 type DBConfig struct {
@@ -31,10 +32,6 @@ func (c DBConfig) ConnectionString() string {
 type GrpcConfig struct {
 	Port    int           `yaml:"port" env-required:"true"`
 	Timeout time.Duration `yaml:"timeout" env-required:"true"`
-}
-
-type AuthConfig struct {
-	TokenTTL time.Duration `yaml:"token-ttl" env-required:"true"`
 }
 
 func MustLoad() Config {

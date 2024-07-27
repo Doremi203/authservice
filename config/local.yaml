@@ -9,5 +9,5 @@ db:
 grpc:
   port: 8080
   timeout: 1h
-auth:
-  token-ttl: 10m
+token:
+  ttl: 10m
