@@ -24,7 +24,7 @@ func main() {
 		log,
 		cfg.Grpc.Port,
 		cfg.DB,
-		cfg.Auth,
+		cfg.Token,
 	)
 
 	application.MustRun()

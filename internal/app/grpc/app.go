@@ -1,9 +1,11 @@
 package grpcapp
 
 import (
+	"authservice/internal/domain/services/auth"
 	authgrpc "authservice/internal/grpc/auth"
 	"fmt"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log/slog"
 	"net"
 )
@@ -16,10 +18,12 @@ type App struct {
 
 func Constructor(
 	log *slog.Logger,
+	authService auth.Service,
 	port int,
 ) App {
 	gRPCServer := grpc.NewServer()
-	authgrpc.Register(gRPCServer)
+	authgrpc.Register(gRPCServer, authService)
+	reflection.Register(gRPCServer)
 
 	return App{
 		log:        log,
@@ -38,11 +42,11 @@ func (a *App) Start() error {
 		return fmt.Errorf("%s: %w", op, err)
 	}
 
+	log.Info("gRPC server listening on", "adress", fmt.Sprintf("%v", listener.Addr()))
+
 	if err := a.gRPCServer.Serve(listener); err != nil {
 		return fmt.Errorf("%s: %w", op, err)
 	}
-
-	log.Info("gRPC server listening on", "adress", fmt.Sprintf("%v:%d", listener.Addr(), a.port))
 
 	return nil
 }
