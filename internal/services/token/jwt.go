@@ -14,6 +14,13 @@ type JWTService struct {
 	timeProvider utils.TimeProvider
 }
 
+func NewJWTService(config token.Config, timeProvider utils.TimeProvider) *JWTService {
+	return &JWTService{
+		config:       config,
+		timeProvider: timeProvider,
+	}
+}
+
 func (s *JWTService) GenerateToken(_ context.Context, extraClaims map[string]any) (types.Token, error) {
 	op := "token.JWTService.GenerateToken"
 	curTime := s.timeProvider.UTCNow()
