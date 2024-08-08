@@ -6,6 +6,11 @@ import (
 	"context"
 )
 
+type Repository interface {
+	Add(ctx context.Context, userData entities.User) (user entities.User, err error)
+	GetByEmail(ctx context.Context, email types.Email) (user entities.User, err error)
+}
+
 type PostgresRepository struct{}
 
 func NewPostgresRepository() *PostgresRepository {

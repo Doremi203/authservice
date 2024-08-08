@@ -9,10 +9,14 @@ type TimeProvider interface {
 
 type DefaultTimeProvider struct{}
 
-func (d DefaultTimeProvider) Now() time.Time {
+func NewDefaultTimeProvider() *DefaultTimeProvider {
+	return &DefaultTimeProvider{}
+}
+
+func (d *DefaultTimeProvider) Now() time.Time {
 	return time.Now()
 }
 
-func (d DefaultTimeProvider) UTCNow() time.Time {
+func (d *DefaultTimeProvider) UTCNow() time.Time {
 	return time.Now().UTC()
 }

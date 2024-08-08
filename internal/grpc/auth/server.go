@@ -1,8 +1,8 @@
 package authgrpc
 
 import (
-	"authservice/internal/domain/repositories/user"
 	"authservice/internal/domain/services/auth"
+	"authservice/internal/domain/services/user"
 	ssov1 "authservice/protos/gen/go/sso"
 	"context"
 	"errors"
