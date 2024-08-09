@@ -1,32 +1,19 @@
 package config
 
 import (
-	"authservice/internal/domain/services/token"
+	"authservice/internal/domain/token"
+	"authservice/pkg/postgres"
 	"flag"
-	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
 	"os"
 	"time"
 )
 
 type Config struct {
-	Env   string       `yaml:"env" env-default:"local"`
-	DB    DBConfig     `yaml:"db" env-required:"true"`
-	Grpc  GrpcConfig   `yaml:"grpc" env-required:"true"`
-	Token token.Config `yaml:"token" env-required:"true"`
-}
-
-type DBConfig struct {
-	UserID         string `yaml:"user-id" env-required:"true"`
-	Password       string `yaml:"password" env-required:"true"`
-	Database       string `yaml:"database" env-required:"true"`
-	Host           string `yaml:"host" env-required:"true"`
-	Options        string `yaml:"options" env-required:"true"`
-	MigrationsPath string `yaml:"migrations-path" env-required:"true"`
-}
-
-func (c DBConfig) ConnectionString() string {
-	return fmt.Sprintf("User ID=%s;Password=%s;Host=%s;Database=%s;%s", c.UserID, c.Password, c.Host, c.Database, c.Options)
+	Env   string          `yaml:"env" env-default:"local"`
+	DB    postgres.Config `yaml:"db" env-required:"true"`
+	Grpc  GrpcConfig      `yaml:"grpc" env-required:"true"`
+	Token token.Config    `yaml:"token" env-required:"true"`
 }
 
 type GrpcConfig struct {

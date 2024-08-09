@@ -1,6 +1,8 @@
-package entities
+package user
 
-import "authservice/internal/domain/types"
+import (
+	"authservice/internal/domain/types"
+)
 
 type User struct {
 	ID             types.UserID

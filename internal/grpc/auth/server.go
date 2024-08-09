@@ -1,8 +1,8 @@
 package authgrpc
 
 import (
-	"authservice/internal/domain/services/auth"
-	"authservice/internal/domain/services/user"
+	auth2 "authservice/internal/domain/auth"
+	"authservice/internal/domain/user"
 	ssov1 "authservice/protos/gen/go/sso"
 	"context"
 	"errors"
@@ -14,10 +14,10 @@ import (
 
 type serverAPI struct {
 	ssov1.UnimplementedAuthServer
-	authService auth.Service
+	authService auth2.Service
 }
 
-func Register(gRPC *grpc.Server, authService auth.Service) {
+func Register(gRPC *grpc.Server, authService auth2.Service) {
 	ssov1.RegisterAuthServer(gRPC, &serverAPI{authService: authService})
 }
 
@@ -53,7 +53,7 @@ func (s *serverAPI) Login(
 
 	token, err := s.authService.Login(ctx, model)
 	if err != nil {
-		if errors.Is(err, auth.ErrInvalidCredentials) {
+		if errors.Is(err, auth2.ErrInvalidCredentials) {
 			return nil, status.Error(codes.Unauthenticated, "invalid email or password")
 		}
 

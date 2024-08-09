@@ -1,8 +1,8 @@
 package token
 
 import (
-	"authservice/internal/domain/entities"
 	"authservice/internal/domain/types"
+	"authservice/internal/domain/user"
 	"authservice/pkg/utils"
 	"context"
 	"fmt"
@@ -10,7 +10,7 @@ import (
 )
 
 type Service interface {
-	GenerateUserToken(ctx context.Context, user entities.User) (types.Token, error)
+	GenerateUserToken(ctx context.Context, user user.User) (types.Token, error)
 }
 
 type JWTService struct {
@@ -25,7 +25,7 @@ func NewJWTService(config Config, timeProvider utils.TimeProvider) *JWTService {
 	}
 }
 
-func (s *JWTService) GenerateUserToken(ctx context.Context, user entities.User) (types.Token, error) {
+func (s *JWTService) GenerateUserToken(ctx context.Context, user user.User) (types.Token, error) {
 	op := "token.JWTService.GenerateUserToken"
 
 	claims := jwt.MapClaims{

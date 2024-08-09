@@ -1,11 +1,10 @@
 package auth
 
 import (
-	"authservice/internal/domain/entities"
-	"authservice/internal/domain/services/password"
-	"authservice/internal/domain/services/token"
-	"authservice/internal/domain/services/user"
+	"authservice/internal/domain/password"
+	"authservice/internal/domain/token"
 	"authservice/internal/domain/types"
+	user2 "authservice/internal/domain/user"
 	"context"
 	"errors"
 	"fmt"
@@ -30,11 +29,11 @@ type Service interface {
 
 type DefaultService struct {
 	tokenService   token.Service
-	userRepository user.Repository
+	userRepository user2.Repository
 	hashProvider   password.Provider
 }
 
-func NewDefaultService(tokenService token.Service, userRepository user.Repository, hashProvider password.Provider) *DefaultService {
+func NewDefaultService(tokenService token.Service, userRepository user2.Repository, hashProvider password.Provider) *DefaultService {
 	return &DefaultService{
 		tokenService:   tokenService,
 		userRepository: userRepository,
@@ -46,7 +45,7 @@ func (s *DefaultService) Register(ctx context.Context, model RegisterModel) (_ t
 	op := "auth.DefaultService.Register"
 	defer func() {
 		if err != nil {
-			if errors.Is(err, user.ErrAlreadyExists) {
+			if errors.Is(err, user2.ErrAlreadyExists) {
 				err = ErrAlreadyRegistered
 			} else {
 				err = fmt.Errorf("%s: %w", op, err)
@@ -59,7 +58,7 @@ func (s *DefaultService) Register(ctx context.Context, model RegisterModel) (_ t
 		return "", err
 	}
 
-	userData := entities.User{
+	userData := user2.User{
 		Email:          model.Email,
 		HashedPassword: hashedPassword,
 	}
@@ -76,7 +75,7 @@ func (s *DefaultService) Login(ctx context.Context, model LoginModel) (_ types.T
 	defer func() {
 		if err != nil {
 			switch {
-			case errors.Is(err, user.ErrNotFound):
+			case errors.Is(err, user2.ErrNotFound):
 				err = ErrInvalidCredentials
 			case errors.Is(err, ErrInvalidCredentials):
 				break

@@ -1,7 +1,7 @@
 package authgrpc
 
 import (
-	"authservice/internal/domain/services/auth"
+	"authservice/internal/domain/auth"
 	"authservice/internal/domain/types"
 	ssov1 "authservice/protos/gen/go/sso"
 	"errors"
