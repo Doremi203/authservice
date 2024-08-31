@@ -4,7 +4,7 @@ import (
 	grpcapp "authservice/internal/app/grpc"
 	"authservice/internal/domain/auth"
 	"authservice/internal/domain/password"
-	token2 "authservice/internal/domain/token"
+	"authservice/internal/domain/token"
 	"authservice/internal/domain/user"
 	"authservice/pkg/postgres"
 	"authservice/pkg/utils"
@@ -22,10 +22,10 @@ func Constructor(
 	log *slog.Logger,
 	port int,
 	dbConfig postgres.Config,
-	tokenConfig token2.Config,
+	tokenConfig token.Config,
 ) App {
 	timeProvider := utils.NewDefaultTimeProvider()
-	tokenService := token2.NewJWTService(tokenConfig, timeProvider)
+	tokenService := token.NewJWTService(tokenConfig, timeProvider)
 	db := postgres.MustNew(dbConfig)
 	userRepository := user.NewPostgresRepository(db)
 	hashProvider := password.NewBCryptProvider()

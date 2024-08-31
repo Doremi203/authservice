@@ -22,7 +22,7 @@ func Constructor(
 	port int,
 ) App {
 	gRPCServer := grpc.NewServer()
-	authgrpc.Register(gRPCServer, authService)
+	authgrpc.Register(gRPCServer, authService, log)
 	reflection.Register(gRPCServer)
 
 	return App{
